@@ -12,7 +12,7 @@ class Goal {
       {this.id,
       required this.name,
       required this.amount,
-      required this.color,
+      this.color = 4294967295,
       required this.icon});
 
   factory Goal.fromMap(Map<String, dynamic> map) {

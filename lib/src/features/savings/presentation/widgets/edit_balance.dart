@@ -43,7 +43,8 @@ class EditBalance extends StatelessWidget {
             ),
             CustomElevatedButton(
               onPressed: () {
-                BlocProvider.of<SavingsBloc>(context)
+                context
+                    .read<SavingsBloc>()
                     .add(EditSavings(double.parse(_salaryController.text)));
               },
               text: "Confirm",

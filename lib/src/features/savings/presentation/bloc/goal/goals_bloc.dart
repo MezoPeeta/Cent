@@ -15,7 +15,7 @@ class GoalsBloc extends Bloc<GoalsEvent, List<Goal>> {
       await GoalDao().insert(Goal(
         name: event.goal.name,
         amount: event.goal.amount,
-        color: event.goal.color,
+        color: event.goal.color ?? 4294967295,
         icon: event.goal.icon,
       ));
       final List<Goal> goals = await GoalDao().getGoals();

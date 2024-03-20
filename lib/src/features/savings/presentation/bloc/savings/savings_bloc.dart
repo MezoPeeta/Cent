@@ -19,11 +19,11 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
     });
     on<EditSavings>((event, emit) async {
       User user = await SavingsDao().getUser();
-      user = user.copyWith(balance: event.newValue);
+
+      user = user.copyWith(balance: event.newValue, id: 1);
+      print(user);
       await SavingsDao().update(user);
       emit(user);
     });
   }
 }
-
-

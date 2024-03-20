@@ -19,12 +19,7 @@ class CustomElevatedButton extends StatelessWidget {
     return SizedBox(
       width: width,
       child: FilledButton.icon(
-        onPressed: () {
-          onPressed();
-          if (context.mounted) {
-            context.pop();
-          }
-        },
+        onPressed: onPressed,
         icon: Icon(icon),
         label: Text(text),
       ),

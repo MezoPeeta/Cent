@@ -1,5 +1,4 @@
 import 'package:cent/src/core/model/user.dart';
-import 'package:cent/src/features/savings/presentation/bloc/goal/goals_state.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,6 +76,9 @@ class SavingsScreen extends StatelessWidget {
               const Text("My goals"),
               BlocBuilder<GoalsBloc, List<Goal>>(
                 builder: (context, goals) {
+                  double userBalance =
+                      context.watch<SavingsBloc>().state.balance;
+
                   return SizedBox(
                     height: 121,
                     child: Row(
@@ -87,8 +89,11 @@ class SavingsScreen extends StatelessWidget {
                               itemCount: goals.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
+                                print(Icons.home_outlined.codePoint);
                                 return GoalCard(
-                                  category: "Category",
+                                  userBalance: userBalance,
+                                  color: Color(goals[index].color),
+                                  amount: goals[index].amount,
                                   name: goals[index].name,
                                   icon: IconData(goals[index].icon,
                                       fontFamily: "MaterialIcons"),
@@ -98,39 +103,9 @@ class SavingsScreen extends StatelessWidget {
                       ],
                     ),
                   );
-
-                  return SizedBox(
-                    height: 121,
-                    width: double.infinity,
-                    child: ListView.builder(
-                        itemCount: goals.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return GoalCard(
-                            category: "Category",
-                            name: goals[index].name,
-                            icon: IconData(goals[index].icon),
-                          );
-                        }),
-                  );
                 },
               ),
               const Text("My transactions"),
-
-              // SizedBox.expand(
-              //   child: ListView.separated(
-              //       itemCount: 5,
-              //       separatorBuilder: (context, index) => const SizedBox(
-              //             height: 18,
-              //           ),
-              //       itemBuilder: (context, index) {
-              //         return const TransactionCard(
-              //           name: "Buy IPhone",
-              //           category: "Clothing",
-              //           amount: 12.0,
-              //         );
-              //       }),
-              // ),
             ],
           ),
         ),
