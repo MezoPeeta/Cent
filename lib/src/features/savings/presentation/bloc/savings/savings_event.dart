@@ -11,3 +11,8 @@ final class EditSavings extends SavingsEvent {
   EditSavings(this.newValue);
 }
 
+final class EditUserSavings extends SavingsEvent {
+  final double expense;
+
+  EditUserSavings(this.expense);
+}

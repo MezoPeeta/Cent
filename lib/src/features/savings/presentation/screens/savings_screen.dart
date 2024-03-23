@@ -1,9 +1,12 @@
+import 'package:cent/src/core/model/expense.dart';
 import 'package:cent/src/core/model/user.dart';
+import 'package:cent/src/features/savings/presentation/bloc/expense/expense_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/model/goal.dart';
 import '../bloc/goal/goals_bloc.dart';
+import '../widgets/expense_bottom_sheet.dart';
 import '../widgets/widgets.dart';
 
 class SavingsScreen extends StatelessWidget {
@@ -83,13 +86,12 @@ class SavingsScreen extends StatelessWidget {
                     height: 121,
                     child: Row(
                       children: [
-                        AddGoal(),
+                        const AddGoal(),
                         Expanded(
                           child: ListView.builder(
                               itemCount: goals.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                print(Icons.home_outlined.codePoint);
                                 return GoalCard(
                                   userBalance: userBalance,
                                   color: Color(goals[index].color),
@@ -105,11 +107,86 @@ class SavingsScreen extends StatelessWidget {
                   );
                 },
               ),
-              const Text("My transactions"),
+              const Text("Expenses"),
+              BlocBuilder<ExpenseBloc, List<Expense>>(
+                builder: (context, expenses) {
+                  return Column(
+                      children: List.generate(
+                          expenses.length,
+                          (index) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: Transaction(
+                                  name: expenses[index].name,
+                                  date: expenses[index].createdAt,
+                                  amount: expenses[index].amount,
+                                  icon: expenses[index].icon,
+                                ),
+                              )));
+                },
+              ),
             ],
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+              showDragHandle: true,
+              useSafeArea: true,
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => AddExpenseBottomSheet());
+        },
+        child: const Icon(Icons.add_outlined),
+      ),
+    );
+  }
+}
+
+class Transaction extends StatelessWidget {
+  const Transaction({
+    super.key,
+    required this.name,
+    required this.date,
+    required this.icon,
+    required this.amount,
+  });
+  final String name, date;
+  final int icon;
+  final double amount;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 30,
+          backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+          child: Icon(IconData(icon, fontFamily: 'MaterialIcons')),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              name,
+              style: const TextStyle(fontSize: 16.5),
+            ),
+            Text(
+              date,
+              style: TextStyle(
+                  color:
+                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+            ),
+          ],
+        ),
+        const Spacer(),
+        Text(
+          "\$$amount",
+        )
+      ],
     );
   }
 }

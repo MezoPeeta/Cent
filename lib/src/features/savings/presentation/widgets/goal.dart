@@ -1,6 +1,5 @@
 import 'package:cent/src/features/savings/presentation/widgets/goal_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class GoalCard extends StatelessWidget {
   const GoalCard(
@@ -15,8 +14,12 @@ class GoalCard extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  Color changeColorLightness(Color color, double newLightnessValue) =>
-      HSLColor.fromColor(color).withLightness(newLightnessValue).toColor();
+  Color changeColorLightness(Color color, double newLightnessValue) {
+    if (color == Colors.black) {
+      return Colors.white;
+    }
+    return HSLColor.fromColor(color).withLightness(newLightnessValue).toColor();
+  }
 
   double calaculatePercentgge(amount, balance) {
     if (balance == 0.0) {
@@ -32,7 +35,6 @@ class GoalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 121,
-      width: 115,
       child: Card(
         color: color,
         child: Padding(
@@ -41,21 +43,10 @@ class GoalCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                          fontSize: 15.0,
-                          color: changeColorLightness(color, 0.2)),
-                    ),
-                    Icon(
-                      Icons.more_vert_outlined,
-                      size: 16,
-                      color: changeColorLightness(color, 0.2),
-                    )
-                  ],
+                child: Text(
+                  name,
+                  style: TextStyle(
+                      fontSize: 15.0, color: changeColorLightness(color, 0.2)),
                 ),
               ),
               FittedBox(
@@ -85,11 +76,7 @@ class GoalCard extends StatelessWidget {
 }
 
 class AddGoal extends StatelessWidget {
-  AddGoal({super.key});
-
-  final TextEditingController _nameController = TextEditingController();
-
-  final TextEditingController _amountController = TextEditingController();
+  const AddGoal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +91,7 @@ class AddGoal extends StatelessWidget {
                 isScrollControlled: true,
                 showDragHandle: true,
                 useSafeArea: true,
-                builder: (context) => AddGoalBottomSheet(
-                    nameController: _nameController,
-                    amountController: _amountController));
+                builder: (context) => AddGoalBottomSheet());
           },
           borderRadius: BorderRadius.circular(10),
           child: const Padding(

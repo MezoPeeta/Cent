@@ -3,6 +3,7 @@ import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class EditBalance extends StatelessWidget {
   EditBalance({
@@ -46,6 +47,7 @@ class EditBalance extends StatelessWidget {
                 context
                     .read<SavingsBloc>()
                     .add(EditSavings(double.parse(_salaryController.text)));
+                context.pop();
               },
               text: "Confirm",
               icon: Icons.edit_outlined,

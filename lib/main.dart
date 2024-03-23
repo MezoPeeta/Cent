@@ -1,5 +1,6 @@
 import 'package:cent/src/app.dart';
 import 'package:cent/src/features/navigation/cubit/navigation_cubit.dart';
+import 'package:cent/src/features/savings/presentation/bloc/expense/expense_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/goal/goals_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:cent/src/features/savings/presentation/cubit/color_cubit.dart';
@@ -11,6 +12,7 @@ void main() {
     BlocProvider(create: (_) => SavingsBloc()..add(LoadSavings())),
     BlocProvider(create: (_) => NavigationCubit()),
     BlocProvider(create: (_) => GoalsBloc()..add(LoadGoalsEvent())),
+    BlocProvider(create: (_) => ExpenseBloc()..add(LoadExpenseEvent())),
     BlocProvider(create: (_) => ColorCubit()),
     BlocProvider(create: (_) => IconCubit()),
   ], child: const MyApp()));

@@ -1,16 +1,17 @@
+import 'package:cent/src/core/model/expense.dart';
+import 'package:cent/src/features/savings/presentation/bloc/expense/expense_bloc.dart';
+import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
+import 'package:cent/src/features/savings/presentation/cubit/color_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/common/widgets/button.dart';
-import '../../../../core/model/goal.dart';
-import '../bloc/goal/goals_bloc.dart';
-import '../cubit/color_cubit.dart';
 import '../goal_theme.dart';
 
-class AddGoalBottomSheet extends StatelessWidget {
-  AddGoalBottomSheet({
+class AddExpenseBottomSheet extends StatelessWidget {
+  AddExpenseBottomSheet({
     super.key,
   });
 
@@ -39,7 +40,7 @@ class AddGoalBottomSheet extends StatelessWidget {
                 },
                 decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.sports_score_outlined),
-                    label: Text("Goal Name")),
+                    label: Text("Expense Name")),
               ),
               const SizedBox(
                 height: 15,
@@ -57,52 +58,6 @@ class AddGoalBottomSheet extends StatelessWidget {
                 decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.attach_money_outlined),
                     label: Text("Amount")),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Text(
-                "Choose a color",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Wrap(
-                children: GoalTheme()
-                    .colors
-                    .map((color) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: InkWell(
-                            onTap: () {
-                              context
-                                  .read<ColorCubit>()
-                                  .changeColor(color.value);
-                            },
-                            borderRadius: BorderRadius.circular(16),
-                            radius: 5,
-                            child: BlocBuilder<ColorCubit, int>(
-                              builder: (context, state) {
-                                bool isColorClicked = state == color.value;
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    border: isColorClicked
-                                        ? Border.all(color: color)
-                                        : null,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Card(
-                                    color: color,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        )))
-                    .toList(),
               ),
               const SizedBox(
                 height: 15,
@@ -158,18 +113,21 @@ class AddGoalBottomSheet extends StatelessWidget {
               CustomElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      int goalColor = context.read<ColorCubit>().state;
-                      int goalIcon = context.read<IconCubit>().state;
-                      Goal goal = Goal(
+                      int expenseIcon = context.read<IconCubit>().state;
+                      Expense expense = Expense(
                           name: _nameController.text,
                           amount: double.parse(_amountController.text),
-                          color: goalColor,
-                          icon: goalIcon);
-                      context.read<GoalsBloc>().add(AddGoalEvent(goal));
+                          icon: expenseIcon);
+                      context.read<ExpenseBloc>().add(AddExpenseEvent(expense));
+
+                      context
+                          .read<SavingsBloc>()
+                          .add(EditUserSavings(expense.amount));
+
                       context.pop();
                     }
                   },
-                  text: "Add Goal",
+                  text: "Add Expense",
                   width: double.infinity,
                   icon: Icons.archive_outlined)
             ],

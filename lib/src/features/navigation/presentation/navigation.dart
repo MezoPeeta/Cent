@@ -17,7 +17,7 @@ class Navigation extends StatelessWidget {
         return Scaffold(
           body: children[state],
           bottomNavigationBar: NavigationBar(
-            height: 70,
+              height: 70,
               labelBehavior:
                   NavigationDestinationLabelBehavior.onlyShowSelected,
               selectedIndex: state,
@@ -28,9 +28,10 @@ class Navigation extends StatelessWidget {
                     icon: Icon(state == 0 ? Icons.home : Icons.home_outlined),
                     label: "Home"),
                 NavigationDestination(
-                    icon: Icon(
-                        state == 1 ? Icons.person_2 : Icons.person_2_outlined),
-                    label: "Profile")
+                    icon: Icon(state == 1
+                        ? Icons.monetization_on
+                        : Icons.monetization_on_outlined),
+                    label: "Spending")
               ]),
         );
       },

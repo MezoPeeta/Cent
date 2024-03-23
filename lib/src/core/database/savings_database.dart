@@ -21,6 +21,8 @@ class SavingsDatabaseProvider {
             'CREATE TABLE USER(id INTEGER PRIMARY KEY, name TEXT, balance DOUBLE(100))');
         await db.execute(
             'CREATE TABLE GOAL(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), color int(100),icon int(100),createdAt DATE)');
+        await db.execute(
+            'CREATE TABLE EXPENSE(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), icon int(100), createdAt DATE)');
       },
     );
   }
