@@ -1,12 +1,11 @@
-import 'package:cent/src/core/model/expense.dart';
-import 'package:cent/src/core/model/user.dart';
-import 'package:cent/src/features/savings/presentation/bloc/expense/expense_bloc.dart';
-import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
+import 'package:cent/src/core/model/transaction.dart';
+import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/model/goal.dart';
-import '../bloc/goal/goals_bloc.dart';
-import '../widgets/expense_bottom_sheet.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import '../widgets/icon_card.dart';
+import '../widgets/transaction_bottom_sheet.dart';
 import '../widgets/widgets.dart';
 
 class SavingsScreen extends StatelessWidget {
@@ -19,7 +18,7 @@ class SavingsScreen extends StatelessWidget {
         toolbarHeight: 10,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +30,7 @@ class SavingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Good Morning",
+                        "Good Morning,",
                         style: TextStyle(fontSize: 16.0),
                       ),
                       Text(
@@ -44,83 +43,36 @@ class SavingsScreen extends StatelessWidget {
                   CircleAvatar()
                 ],
               ),
-              BalanceCard(
-                widget: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Savings Balance"),
-                    BlocBuilder<SavingsBloc, User>(
-                      builder: (context, state) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '\$${state.balance}',
-                              style: const TextStyle(
-                                  fontSize: 24.0, fontWeight: FontWeight.bold),
-                            ),
-                            FilledButton.icon(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) => EditBalance(
-                                            initialValue: "${state.balance}",
-                                          ));
-                                },
-                                icon: const Icon(Icons.edit_outlined),
-                                label: const Text("Edit"))
-                          ],
-                        );
-                      },
-                    )
-                  ],
-                ),
+              const BalanceCard(),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Transaction",
+                    style:
+                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              const Text("My goals"),
-              BlocBuilder<GoalsBloc, List<Goal>>(
-                builder: (context, goals) {
-                  double userBalance =
-                      context.watch<SavingsBloc>().state.balance;
-
-                  return SizedBox(
-                    height: 121,
-                    child: Row(
-                      children: [
-                        const AddGoal(),
-                        Expanded(
-                          child: ListView.builder(
-                              itemCount: goals.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return GoalCard(
-                                  userBalance: userBalance,
-                                  color: Color(goals[index].color),
-                                  amount: goals[index].amount,
-                                  name: goals[index].name,
-                                  icon: IconData(goals[index].icon,
-                                      fontFamily: "MaterialIcons"),
-                                );
-                              }),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-              const Text("Expenses"),
-              BlocBuilder<ExpenseBloc, List<Expense>>(
-                builder: (context, expenses) {
+              BlocBuilder<TransactionBloc, List<Transaction>>(
+                builder: (context, transactions) {
                   return Column(
                       children: List.generate(
-                          expenses.length,
+                          transactions.length,
                           (index) => Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 5),
-                                child: Transaction(
-                                  name: expenses[index].name,
-                                  date: expenses[index].createdAt,
-                                  amount: expenses[index].amount,
-                                  icon: expenses[index].icon,
+                                child: TransactionCard(
+                                  onTap: () => context.push('/transaction/edit',
+                                      extra: Transaction(
+                                          id: transactions[index].id,
+                                          name: transactions[index].name,
+                                          amount: transactions[index].amount,
+                                          icon: transactions[index].icon)),
+                                  name: transactions[index].name,
+                                  date: transactions[index].createdAt,
+                                  amount: transactions[index].amount,
+                                  icon: transactions[index].icon,
                                 ),
                               )));
                 },
@@ -136,7 +88,7 @@ class SavingsScreen extends StatelessWidget {
               useSafeArea: true,
               isScrollControlled: true,
               context: context,
-              builder: (context) => AddExpenseBottomSheet());
+              builder: (context) => AddTransactionBottomSheet());
         },
         child: const Icon(Icons.add_outlined),
       ),
@@ -144,49 +96,66 @@ class SavingsScreen extends StatelessWidget {
   }
 }
 
-class Transaction extends StatelessWidget {
-  const Transaction({
-    super.key,
-    required this.name,
-    required this.date,
-    required this.icon,
-    required this.amount,
-  });
+class TransactionCard extends StatelessWidget {
+  const TransactionCard(
+      {super.key,
+      required this.name,
+      required this.date,
+      required this.icon,
+      required this.amount,
+      required this.onTap});
   final String name, date;
   final int icon;
   final double amount;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-          child: Icon(IconData(icon, fontFamily: 'MaterialIcons')),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Row(
           children: [
-            Text(
-              name,
-              style: const TextStyle(fontSize: 16.5),
+            IconCard(icon: IconData(icon, fontFamily: "MaterialIcons")),
+            const SizedBox(
+              width: 10,
             ),
-            Text(
-              date,
-              style: TextStyle(
-                  color:
-                      Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                      fontSize: 16.5, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  DateFormat.yMMMd().format(DateTime.parse(date)),
+                  style: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.5)),
+                ),
+              ],
             ),
+            const Spacer(),
+            Row(
+              children: [
+                Icon(Icons.arrow_drop_down,
+                    color: Theme.of(context).colorScheme.error),
+                Text(
+                  "\$$amount",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.error),
+                ),
+              ],
+            )
           ],
         ),
-        const Spacer(),
-        Text(
-          "\$$amount",
-        )
-      ],
+      ),
     );
   }
 }

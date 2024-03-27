@@ -1,5 +1,5 @@
-import 'package:cent/src/core/model/expense.dart';
-import 'package:cent/src/features/savings/presentation/bloc/expense/expense_bloc.dart';
+import 'package:cent/src/core/model/transaction.dart';
+import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:cent/src/features/savings/presentation/cubit/color_cubit.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/common/widgets/button.dart';
 import '../goal_theme.dart';
 
-class AddExpenseBottomSheet extends StatelessWidget {
-  AddExpenseBottomSheet({
+class AddTransactionBottomSheet extends StatelessWidget {
+  AddTransactionBottomSheet({
     super.key,
   });
 
@@ -40,7 +40,7 @@ class AddExpenseBottomSheet extends StatelessWidget {
                 },
                 decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.sports_score_outlined),
-                    label: Text("Expense Name")),
+                    label: Text("Transaction Name")),
               ),
               const SizedBox(
                 height: 15,
@@ -114,11 +114,13 @@ class AddExpenseBottomSheet extends StatelessWidget {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       int expenseIcon = context.read<IconCubit>().state;
-                      Expense expense = Expense(
+                      Transaction expense = Transaction(
                           name: _nameController.text,
                           amount: double.parse(_amountController.text),
                           icon: expenseIcon);
-                      context.read<ExpenseBloc>().add(AddExpenseEvent(expense));
+                      context
+                          .read<TransactionBloc>()
+                          .add(AddTransactionEvent(expense));
 
                       context
                           .read<SavingsBloc>()
@@ -127,7 +129,7 @@ class AddExpenseBottomSheet extends StatelessWidget {
                       context.pop();
                     }
                   },
-                  text: "Add Expense",
+                  text: "Add Transaction",
                   width: double.infinity,
                   icon: Icons.archive_outlined)
             ],

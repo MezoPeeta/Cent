@@ -1,31 +1,27 @@
 import 'package:intl/intl.dart';
 
-class Expense {
+class Loan {
   int? id;
   String name;
   double amount;
-  int icon;
+  String date;
   String createdAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
 
-  Expense(
-      {this.id,
-      required this.name,
-      required this.amount,
-      required this.icon});
+  Loan({this.id, required this.name, required this.amount, required this.date});
 
-  factory Expense.fromMap(Map<String, dynamic> map) {
-    return Expense(
+  factory Loan.fromMap(Map<String, dynamic> map) {
+    return Loan(
         id: map["id"],
         name: map["name"],
         amount: map["amount"],
-        icon: map["icon"]);
+        date: map["date"]);
   }
 
   Map<String, Object?> toMap() {
     var map = {
       "name": name,
       "amount": amount,
-      "icon": icon,
+      "date": date,
       "createdAt": createdAt
     };
     if (id != null) {
@@ -36,5 +32,5 @@ class Expense {
 
   @override
   String toString() =>
-      "Expense(id:$id, name: $name, amount: $amount, icon: $icon)";
+      "Loan(id:$id, name: $name, amount: $amount, date: $date)";
 }

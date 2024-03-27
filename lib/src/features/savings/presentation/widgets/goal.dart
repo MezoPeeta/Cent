@@ -34,7 +34,8 @@ class GoalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 121,
+      height: 120,
+      width: 125,
       child: Card(
         color: color,
         child: Padding(

@@ -1,17 +1,17 @@
 import 'package:cent/src/core/database/savings_database.dart';
-import 'package:cent/src/core/model/expense.dart';
+import 'package:cent/src/core/model/transaction.dart';
 
-class ExpenseDao {
+class TransactionDao {
   final dbProvider = SavingsDatabaseProvider.dbProvider;
-  String tableName = "EXPENSE";
+  String tableName = "TRANSACTIONS";
 
-  Future<List<Expense>> getExpenses() async {
+  Future<List<Transaction>> getTransaction() async {
     final db = await dbProvider.database;
     List<Map<String, dynamic>> maps = await db!.rawQuery(
       "SELECT * FROM $tableName ORDER BY createdAT DESC",
     );
     if (maps.isNotEmpty) {
-      return maps.map((e) => Expense.fromMap(e)).toList();
+      return maps.map((e) => Transaction.fromMap(e)).toList();
     }
     return [];
   }
@@ -22,14 +22,14 @@ class ExpenseDao {
     return await db!.delete(tableName, where: 'id= ?', whereArgs: [id]);
   }
 
-  Future<int> insert(Expense expense) async {
+  Future<int> insert(Transaction expense) async {
     final db = await dbProvider.database;
     return await db!.insert(tableName, expense.toMap());
   }
 
-  Future<int> update(Expense expense) async {
+  Future<int> update(Transaction expense) async {
     final db = await dbProvider.database;
-    final foundGoals = await getExpenses();
+    final foundGoals = await getTransaction();
     for (var element in foundGoals) {
       if (element.id == expense.id) {}
       return db!.update(tableName, expense.toMap(),
