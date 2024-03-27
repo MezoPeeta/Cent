@@ -27,7 +27,13 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
     });
     on<EditUserSavings>((event, emit) async {
       User user = await SavingsDao().getUser();
-      user = user.copyWith(balance: user.balance - event.expense, id: 1);
+      if (event.isExpense) {
+        user = user.copyWith(
+            balance: user.balance - event.transactionAmount, id: 1);
+      } else {
+        user = user.copyWith(
+            balance: user.balance + event.transactionAmount, id: 1);
+      }
       await SavingsDao().update(user);
 
       emit(user);

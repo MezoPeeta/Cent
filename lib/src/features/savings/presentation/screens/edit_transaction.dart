@@ -21,10 +21,33 @@ class EditTransactionScreen extends StatelessWidget {
             actions: [
               IconButton(
                   onPressed: () {
-                    context
-                        .read<TransactionBloc>()
-                        .add(DeleteTransactionEvent(transaction.id!));
-                    context.pop();
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: const Text("Delete transaction ?"),
+                              content: Text("Delete ${transaction.name}"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      context.pop();
+                                    },
+                                    child: const Text("Cancel")),
+                                TextButton(
+                                    onPressed: () {
+                                      context.read<TransactionBloc>().add(
+                                          DeleteTransactionEvent(
+                                              transaction.id!));
+                                      context.go('/');
+                                    },
+                                    child: Text(
+                                      "Delete",
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error),
+                                    )),
+                              ],
+                            ));
                   },
                   icon: const Icon(Icons.delete_outline_outlined))
             ],

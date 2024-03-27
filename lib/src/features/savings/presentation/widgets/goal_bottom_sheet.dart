@@ -7,6 +7,7 @@ import '../../../../core/common/widgets/button.dart';
 import '../../../../core/model/goal.dart';
 import '../bloc/goal/goals_bloc.dart';
 import '../cubit/color_cubit.dart';
+import '../cubit/icon_cubit.dart';
 import '../goal_theme.dart';
 
 class AddGoalBottomSheet extends StatelessWidget {

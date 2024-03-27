@@ -1,13 +1,15 @@
 import 'package:cent/src/core/model/transaction.dart';
 import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
-import 'package:cent/src/features/savings/presentation/cubit/color_cubit.dart';
+import 'package:cent/src/features/savings/presentation/cubit/transaction_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/common/enums/transaction.dart';
 import '../../../../core/common/widgets/button.dart';
+import '../cubit/icon_cubit.dart';
 import '../goal_theme.dart';
 
 class AddTransactionBottomSheet extends StatelessWidget {
@@ -30,6 +32,28 @@ class AddTransactionBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: BlocBuilder<TransactionCubit, TransactionType>(
+                  builder: (context, state) {
+                    return SegmentedButton<TransactionType>(
+                      segments: const <ButtonSegment<TransactionType>>[
+                        ButtonSegment<TransactionType>(
+                            label: Text("Expense"),
+                            value: TransactionType.expense,
+                            icon: Icon(Icons.arrow_drop_down)),
+                        ButtonSegment<TransactionType>(
+                            value: TransactionType.income,
+                            icon: Icon(Icons.arrow_drop_up),
+                            label: Text("Income")),
+                      ],
+                      selected: {state},
+                      onSelectionChanged: (selectedTypes) => context
+                          .read<TransactionCubit>()
+                          .changeType(selectedTypes.first),
+                    );
+                  },
+                ),
+              ),
               TextFormField(
                 controller: _nameController,
                 validator: (value) {
@@ -110,28 +134,34 @@ class AddTransactionBottomSheet extends StatelessWidget {
                     .toList(),
               ),
               const Spacer(),
-              CustomElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      int expenseIcon = context.read<IconCubit>().state;
-                      Transaction expense = Transaction(
-                          name: _nameController.text,
-                          amount: double.parse(_amountController.text),
-                          icon: expenseIcon);
-                      context
-                          .read<TransactionBloc>()
-                          .add(AddTransactionEvent(expense));
+              Builder(builder: (context) {
+                return CustomElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        int transactionIcon = context.read<IconCubit>().state;
+                        TransactionType transactionType =
+                            context.read<TransactionCubit>().state;
+                        Transaction transaction = Transaction(
+                            category: "Dinner",
+                            type: transactionType.name,
+                            name: _nameController.text,
+                            amount: double.parse(_amountController.text),
+                            icon: transactionIcon);
+                        context
+                            .read<TransactionBloc>()
+                            .add(AddTransactionEvent(transaction));
 
-                      context
-                          .read<SavingsBloc>()
-                          .add(EditUserSavings(expense.amount));
+                        context.read<SavingsBloc>().add(EditUserSavings(
+                            transaction.amount,
+                            transactionType.name == "expense"));
 
-                      context.pop();
-                    }
-                  },
-                  text: "Add Transaction",
-                  width: double.infinity,
-                  icon: Icons.archive_outlined)
+                        context.pop();
+                      }
+                    },
+                    text: "Add Transaction",
+                    width: double.infinity,
+                    icon: Icons.archive_outlined);
+              })
             ],
           ),
         ),
