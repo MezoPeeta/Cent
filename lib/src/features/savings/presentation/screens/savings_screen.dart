@@ -1,4 +1,6 @@
 import 'package:cent/src/core/model/transaction.dart';
+import 'package:cent/src/core/model/user.dart';
+import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,24 +26,28 @@ class SavingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Good Morning,",
                         style: TextStyle(fontSize: 16.0),
                       ),
-                      Text(
-                        "Mazen Omar",
-                        style: TextStyle(
-                            fontSize: 24.0, fontWeight: FontWeight.bold),
+                      BlocBuilder<SavingsBloc, User>(
+                        builder: (context, state) {
+                          return Text(
+                            state.name,
+                            style: const TextStyle(
+                                fontSize: 24.0, fontWeight: FontWeight.bold),
+                          );
+                        },
                       )
                     ],
                   ),
-                  CircleAvatar()
+                  const CircleAvatar()
                 ],
               ),
               const BalanceCard(),

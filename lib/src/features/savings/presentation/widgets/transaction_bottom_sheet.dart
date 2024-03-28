@@ -142,7 +142,6 @@ class AddTransactionBottomSheet extends StatelessWidget {
                         TransactionType transactionType =
                             context.read<TransactionCubit>().state;
                         Transaction transaction = Transaction(
-                            category: "Dinner",
                             type: transactionType.name,
                             name: _nameController.text,
                             amount: double.parse(_amountController.text),

@@ -22,7 +22,7 @@ class SavingsDatabaseProvider {
         await db.execute(
             'CREATE TABLE GOAL(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), color int(100),icon int(100),createdAt DATE)');
         await db.execute(
-            'CREATE TABLE TRANSACTIONS(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), icon int(100), type TEXT, category TEXT, createdAt DATE)');
+            'CREATE TABLE TRANSACTIONS(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), icon int(100), type TEXT, createdAt DATE)');
       },
     );
   }

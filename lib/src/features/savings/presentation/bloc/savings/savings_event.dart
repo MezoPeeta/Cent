@@ -17,3 +17,9 @@ final class EditUserSavings extends SavingsEvent {
 
   EditUserSavings(this.transactionAmount, this.isExpense);
 }
+
+final class ChangeUserName extends SavingsEvent {
+  final String name;
+
+  ChangeUserName(this.name);
+}

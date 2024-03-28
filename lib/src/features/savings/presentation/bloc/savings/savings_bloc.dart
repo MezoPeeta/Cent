@@ -10,7 +10,7 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
   SavingsBloc()
       : super(User(
           id: 0,
-          name: "",
+          name: "Guest",
           balance: 0.0,
         )) {
     on<LoadSavings>((event, emit) async {
@@ -36,6 +36,13 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
       }
       await SavingsDao().update(user);
 
+      emit(user);
+    });
+    on<ChangeUserName>((event, emit) async {
+      User user = await SavingsDao().getUser();
+      String userName = event.name == "" ? "Guest" : event.name;
+      user = user.copyWith(name: userName, id: 1);
+      await SavingsDao().update(user);
       emit(user);
     });
   }
