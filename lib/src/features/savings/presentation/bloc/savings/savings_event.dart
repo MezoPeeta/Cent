@@ -23,3 +23,8 @@ final class ChangeUserName extends SavingsEvent {
 
   ChangeUserName(this.name);
 }
+final class AddUserBalance extends SavingsEvent {
+  final double balance;
+
+  AddUserBalance(this.balance);
+}

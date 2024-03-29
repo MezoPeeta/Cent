@@ -5,8 +5,6 @@ import 'package:cent/src/features/savings/presentation/bloc/transaction/transact
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import '../widgets/icon_card.dart';
 import '../widgets/transaction_bottom_sheet.dart';
 import '../widgets/transaction_card.dart';
 import '../widgets/widgets.dart';
@@ -33,7 +31,7 @@ class SavingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Good Morning,",
+                        "Hello,",
                         style: TextStyle(fontSize: 16.0),
                       ),
                       BlocBuilder<SavingsBloc, User>(

@@ -40,8 +40,14 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
     });
     on<ChangeUserName>((event, emit) async {
       User user = await SavingsDao().getUser();
-      String userName = event.name == "" ? "Guest" : event.name;
+      String userName = event.name.isEmpty ? "Guest" : event.name;
       user = user.copyWith(name: userName, id: 1);
+      await SavingsDao().update(user);
+      emit(user);
+    });
+     on<AddUserBalance>((event, emit) async {
+      User user = await SavingsDao().getUser();
+      user = user.copyWith(balance: event.balance, id: 1);
       await SavingsDao().update(user);
       emit(user);
     });

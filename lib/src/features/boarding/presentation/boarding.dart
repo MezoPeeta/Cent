@@ -17,18 +17,6 @@ class BoardingScreen extends StatefulWidget {
 class _BoardingScreenState extends State<BoardingScreen> {
   late PageController _pageViewController;
   int _currentIndex = 0;
-  List<Boarding> boarding = [
-    Boarding(
-      title: "Thank you for choosing Cent",
-      description:
-          "Welcome aboard! Start managing your finances smarter and more efficiently",
-    ),
-    Boarding(
-      title: "Set Your Financial Goals",
-      description:
-          "Let's get started on the path to financial success! Set your short-term and long-term financial goals to stay motivated and focused.",
-    ),
-  ];
 
   @override
   void initState() {
@@ -90,7 +78,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
                     SizedBox(
                         width: 200,
                         child: TextFormField(
-                          initialValue: "Guest",
+                          initialValue: context.read<SavingsBloc>().state.name,
                           onChanged: (value) => context
                               .read<SavingsBloc>()
                               .add(ChangeUserName(value)),
@@ -103,7 +91,41 @@ class _BoardingScreenState extends State<BoardingScreen> {
                       textAlign: TextAlign.center,
                     ),
                   ],
-                )
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/img/savings.svg',
+                      width: 300,
+                      fit: BoxFit.cover,
+                    ),
+                    const Text(
+                      "Add into balance",
+                      style: TextStyle(fontSize: 23),
+                    ),
+                    SizedBox(
+                        width: 80,
+                        child: TextFormField(
+                          initialValue: context
+                              .read<SavingsBloc>()
+                              .state
+                              .balance
+                              .toString(),
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) => context.read<SavingsBloc>().add(
+                              AddUserBalance(
+                                  double.parse(value == "" ? "0" : value))),
+                        )),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      "All your data is stored on your device, we don't collect any data",
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -126,7 +148,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
                     : Container(),
                 IconButton(
                   onPressed: () {
-                    if (_currentIndex == boarding.length - 1) {
+                    if (_currentIndex == 2) {
                       context.go('/home');
                       CacheHelper.setBool("boardingDone", true);
                       return;

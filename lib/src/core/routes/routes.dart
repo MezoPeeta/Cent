@@ -11,10 +11,8 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) {
-        print(boardingDone);
-        return boardingDone ? const Navigation() : const BoardingScreen();
-      },
+      builder: (context, state) =>
+          boardingDone ? const Navigation() : const BoardingScreen(),
     ),
     GoRoute(
       path: '/home',
