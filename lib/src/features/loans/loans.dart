@@ -12,7 +12,6 @@ class LoanScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 300,
@@ -42,22 +41,22 @@ class LoanScreen extends StatelessWidget {
                             SizedBox(
                               width: 5,
                             ),
-                            Text("Loan Name"),
+                            Text('Loan Name'),
                           ],
                         ),
                         const Spacer(),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 20),
+                              horizontal: 40, vertical: 20,),
                           child: LinearProgressIndicator(
                             value: 0.5,
                             borderRadius: BorderRadius.circular(20),
                             minHeight: 10,
                           ),
-                        )
+                        ),
                       ],
                     ),
-                  )),
+                  ),),
             ],
           ),
         ),

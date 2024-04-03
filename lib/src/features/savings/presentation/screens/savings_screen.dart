@@ -2,12 +2,12 @@ import 'package:cent/src/core/model/transaction.dart';
 import 'package:cent/src/core/model/user.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
+import 'package:cent/src/features/savings/presentation/widgets/transaction_bottom_sheet.dart';
+import 'package:cent/src/features/savings/presentation/widgets/transaction_card.dart';
+import 'package:cent/src/features/savings/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../widgets/transaction_bottom_sheet.dart';
-import '../widgets/transaction_card.dart';
-import '../widgets/widgets.dart';
 
 class SavingsScreen extends StatelessWidget {
   const SavingsScreen({super.key});
@@ -31,21 +31,23 @@ class SavingsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Hello,",
-                        style: TextStyle(fontSize: 16.0),
+                        'Hello,',
+                        style: TextStyle(fontSize: 16),
                       ),
                       BlocBuilder<SavingsBloc, User>(
                         builder: (context, state) {
                           return Text(
                             state.name,
                             style: const TextStyle(
-                                fontSize: 24.0, fontWeight: FontWeight.bold),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
                           );
                         },
-                      )
+                      ),
                     ],
                   ),
-                  const CircleAvatar()
+                  const CircleAvatar(),
                 ],
               ),
               const BalanceCard(),
@@ -53,30 +55,32 @@ class SavingsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Transaction",
-                    style:
-                        TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
+                    'Transaction',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
               BlocBuilder<TransactionBloc, List<Transaction>>(
                 builder: (context, transactions) {
                   return Column(
-                      children: List.generate(
-                          transactions.length,
-                          (index) => Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                child: TransactionCard(
-                                  onTap: () => context.push('/transaction/edit',
-                                      extra: transactions[index]),
-                                  name: transactions[index].name,
-                                  type: transactions[index].type,
-                                  date: transactions[index].createdAt,
-                                  amount: transactions[index].amount,
-                                  icon: transactions[index].icon,
-                                ),
-                              )));
+                    children: List.generate(
+                      transactions.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: TransactionCard(
+                          onTap: () => context.push(
+                            '/transaction/edit',
+                            extra: transactions[index],
+                          ),
+                          name: transactions[index].name,
+                          type: transactions[index].type,
+                          date: transactions[index].createdAt,
+                          amount: transactions[index].amount,
+                          icon: transactions[index].icon,
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
             ],
@@ -84,14 +88,13 @@ class SavingsScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              showDragHandle: true,
-              useSafeArea: true,
-              isScrollControlled: true,
-              context: context,
-              builder: (context) => AddTransactionBottomSheet());
-        },
+        onPressed: () => showModalBottomSheet<Widget>(
+          showDragHandle: true,
+          useSafeArea: true,
+          isScrollControlled: true,
+          context: context,
+          builder: (context) => AddTransactionBottomSheet(),
+        ),
         child: const Icon(Icons.add_outlined),
       ),
     );

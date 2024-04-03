@@ -6,25 +6,22 @@ sealed class SavingsEvent {}
 final class LoadSavings extends SavingsEvent {}
 
 final class EditSavings extends SavingsEvent {
-  final double newValue;
-
   EditSavings(this.newValue);
+  final double newValue;
 }
 
 final class EditUserSavings extends SavingsEvent {
+  EditUserSavings(this.transactionAmount, {required this.isExpense});
   final double transactionAmount;
   final bool isExpense;
-
-  EditUserSavings(this.transactionAmount, this.isExpense);
 }
 
 final class ChangeUserName extends SavingsEvent {
-  final String name;
-
   ChangeUserName(this.name);
+  final String name;
 }
-final class AddUserBalance extends SavingsEvent {
-  final double balance;
 
+final class AddUserBalance extends SavingsEvent {
   AddUserBalance(this.balance);
+  final double balance;
 }

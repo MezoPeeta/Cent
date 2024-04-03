@@ -10,43 +10,43 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
   SavingsBloc()
       : super(User(
           id: 0,
-          name: "Guest",
-          balance: 0.0,
-        )) {
+          name: 'Guest',
+          balance: 0,
+        ),) {
     on<LoadSavings>((event, emit) async {
-      User user = await SavingsDao().getUser();
+      final user = await SavingsDao().getUser();
       await SavingsDao().update(user);
 
       emit(user);
     });
     on<EditSavings>((event, emit) async {
-      User user = await SavingsDao().getUser();
+      var user = await SavingsDao().getUser();
       user = user.copyWith(balance: event.newValue, id: 1);
       await SavingsDao().update(user);
       emit(user);
     });
     on<EditUserSavings>((event, emit) async {
-      User user = await SavingsDao().getUser();
+      var user = await SavingsDao().getUser();
       if (event.isExpense) {
         user = user.copyWith(
-            balance: user.balance - event.transactionAmount, id: 1);
+            balance: user.balance - event.transactionAmount, id: 1,);
       } else {
         user = user.copyWith(
-            balance: user.balance + event.transactionAmount, id: 1);
+            balance: user.balance + event.transactionAmount, id: 1,);
       }
       await SavingsDao().update(user);
 
       emit(user);
     });
     on<ChangeUserName>((event, emit) async {
-      User user = await SavingsDao().getUser();
-      String userName = event.name.isEmpty ? "Guest" : event.name;
+      var user = await SavingsDao().getUser();
+      final userName = event.name.isEmpty ? 'Guest' : event.name;
       user = user.copyWith(name: userName, id: 1);
       await SavingsDao().update(user);
       emit(user);
     });
      on<AddUserBalance>((event, emit) async {
-      User user = await SavingsDao().getUser();
+      var user = await SavingsDao().getUser();
       user = user.copyWith(balance: event.balance, id: 1);
       await SavingsDao().update(user);
       emit(user);

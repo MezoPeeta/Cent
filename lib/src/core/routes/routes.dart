@@ -5,14 +5,15 @@ import 'package:cent/src/features/navigation/presentation/navigation.dart';
 import 'package:cent/src/features/savings/presentation/screens/edit_transaction.dart';
 import 'package:go_router/go_router.dart';
 
-final boardingDone = CacheHelper.getBool("boardingDone");
+final boardingDone = CacheHelper.getBool('boardingDone');
 
 final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
       builder: (context, state) =>
-          boardingDone ? const Navigation() : const BoardingScreen(),
+         boardingDone ? const Navigation() : const BoardingScreen(),
+      
     ),
     GoRoute(
       path: '/home',
@@ -21,7 +22,7 @@ final router = GoRouter(
     GoRoute(
       path: '/transaction/edit',
       builder: (context, state) =>
-          EditTransactionScreen(transaction: state.extra as Transaction),
+          EditTransactionScreen(transaction: state.extra! as Transaction),
     ),
   ],
 );

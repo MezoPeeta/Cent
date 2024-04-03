@@ -4,9 +4,9 @@ import 'package:cent/src/core/model/user.dart';
 abstract interface class SavingsRepository {
   final savingsDao = SavingsDao();
 
-  Future<User?> getUser(int id) async => await savingsDao.getUser();
+  Future<User?> getUser(int id) async => savingsDao.getUser();
 
-  Future<int> delete(int id) async => await savingsDao.delete(id);
+  Future<int> delete(int id) async => savingsDao.delete(id);
 
-  Future<void> close() async => await savingsDao.close();
+  Future<void> close() async => savingsDao.close();
 }

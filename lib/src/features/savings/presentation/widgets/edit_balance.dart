@@ -7,8 +7,7 @@ import 'package:go_router/go_router.dart';
 
 class EditBalance extends StatelessWidget {
   EditBalance({
-    super.key,
-    required this.initialValue,
+    required this.initialValue, super.key,
   });
 
   final String initialValue;
@@ -33,9 +32,9 @@ class EditBalance extends StatelessWidget {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.attach_money_outlined),
                   suffixIcon: IconButton(
-                      onPressed: () => _salaryController.clear(),
-                      icon: const Icon(Icons.cancel_outlined)),
-                  label: const Text("My savings"),
+                      onPressed: _salaryController.clear,
+                      icon: const Icon(Icons.cancel_outlined),),
+                  label: const Text('My savings'),
                 ),
               ),
             ),
@@ -49,12 +48,12 @@ class EditBalance extends StatelessWidget {
                     .add(EditSavings(double.parse(_salaryController.text)));
                 context.pop();
               },
-              text: "Confirm",
+              text: 'Confirm',
               icon: Icons.edit_outlined,
-            )
+            ),
           ],
         ),
-      )),
+      ),),
     );
   }
 }

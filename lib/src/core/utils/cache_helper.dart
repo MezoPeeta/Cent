@@ -23,7 +23,7 @@ class CacheHelper {
     return pref?.getInt(key);
   }
 
-  static Future<void> setBool(String key, bool value) async {
+  static Future<void> setBool(String key, {required bool value}) async {
     await pref?.setBool(key, value);
   }
 
@@ -39,7 +39,7 @@ class CacheHelper {
     return pref?.getStringList(key);
   }
 
-  static Future<void> remove(key) async {
+  static Future<void> remove(String key) async {
     await pref?.remove(key);
   }
 

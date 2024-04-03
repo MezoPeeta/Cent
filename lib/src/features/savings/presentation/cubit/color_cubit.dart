@@ -7,4 +7,3 @@ class ColorCubit extends Cubit<int> {
     emit(newValue);
   }
 }
-

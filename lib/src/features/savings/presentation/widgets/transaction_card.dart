@@ -1,18 +1,20 @@
+import 'package:cent/src/features/savings/presentation/widgets/icon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'icon_card.dart';
-
 class TransactionCard extends StatelessWidget {
-  const TransactionCard(
-      {super.key,
-      required this.name,
-      required this.date,
-      required this.icon,
-      required this.amount,
-      required this.type,
-      required this.onTap});
-  final String name, date, type;
+  const TransactionCard({
+    required this.name,
+    required this.date,
+    required this.icon,
+    required this.amount,
+    required this.type,
+    required this.onTap,
+    super.key,
+  });
+  final String name;
+  final String date;
+  final String type;
   final int icon;
   final double amount;
   final void Function() onTap;
@@ -22,10 +24,10 @@ class TransactionCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(20),
       child: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5),
         child: Row(
           children: [
-            IconCard(icon: IconData(icon, fontFamily: "MaterialIcons")),
+            IconCard(icon: IconData(icon, fontFamily: 'MaterialIcons')),
             const SizedBox(
               width: 10,
             ),
@@ -35,22 +37,26 @@ class TransactionCard extends StatelessWidget {
                 Text(
                   name,
                   style: const TextStyle(
-                      fontSize: 16.5, fontWeight: FontWeight.bold),
+                    fontSize: 16.5,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   DateFormat.yMMMd().format(DateTime.parse(date)),
                   style: TextStyle(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withOpacity(0.5)),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurface
+                        .withOpacity(0.5),
+                  ),
                 ),
               ],
             ),
             const Spacer(),
-            type == "expense"
-                ? ExpenseWidget(amount: amount)
-                : IncomeWidget(amount: amount)
+            if (type == 'expense')
+              ExpenseWidget(amount: amount)
+            else
+              IncomeWidget(amount: amount),
           ],
         ),
       ),
@@ -60,8 +66,8 @@ class TransactionCard extends StatelessWidget {
 
 class ExpenseWidget extends StatelessWidget {
   const ExpenseWidget({
-    super.key,
     required this.amount,
+    super.key,
   });
 
   final double amount;
@@ -72,11 +78,12 @@ class ExpenseWidget extends StatelessWidget {
       children: [
         Icon(Icons.arrow_drop_down, color: Theme.of(context).colorScheme.error),
         Text(
-          "\$$amount",
+          '\$$amount',
           style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.error),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.error,
+          ),
         ),
       ],
     );
@@ -85,8 +92,8 @@ class ExpenseWidget extends StatelessWidget {
 
 class IncomeWidget extends StatelessWidget {
   const IncomeWidget({
-    super.key,
     required this.amount,
+    super.key,
   });
 
   final double amount;
@@ -97,11 +104,12 @@ class IncomeWidget extends StatelessWidget {
       children: [
         Icon(Icons.arrow_drop_up, color: Colors.green[700]),
         Text(
-          "\$$amount",
+          '\$$amount',
           style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.green[700]),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.green[700],
+          ),
         ),
       ],
     );

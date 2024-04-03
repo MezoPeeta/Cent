@@ -6,7 +6,7 @@ sealed class GoalsState {}
 
 // ignore: must_be_immutable
 final class GoalsInitial extends GoalsState {
-  List<Goal> goal;
 
   GoalsInitial(this.goal);
+  List<Goal> goal;
 }

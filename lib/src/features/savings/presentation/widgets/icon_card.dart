@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class IconCard extends StatelessWidget {
   const IconCard({
-    super.key,
-    required this.icon,
+    required this.icon, super.key,
   });
 
   final IconData icon;
