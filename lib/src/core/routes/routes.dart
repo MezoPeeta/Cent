@@ -1,6 +1,8 @@
+import 'package:cent/src/core/model/goal.dart';
 import 'package:cent/src/core/model/transaction.dart';
 import 'package:cent/src/core/utils/cache_helper.dart';
 import 'package:cent/src/features/boarding/presentation/boarding.dart';
+import 'package:cent/src/features/goals/presentation/screens/goals_edit.dart';
 import 'package:cent/src/features/navigation/presentation/navigation.dart';
 import 'package:cent/src/features/savings/presentation/screens/edit_transaction.dart';
 import 'package:go_router/go_router.dart';
@@ -12,8 +14,7 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) =>
-         boardingDone ? const Navigation() : const BoardingScreen(),
-      
+          boardingDone ? const Navigation() : const BoardingScreen(),
     ),
     GoRoute(
       path: '/home',
@@ -23,6 +24,10 @@ final router = GoRouter(
       path: '/transaction/edit',
       builder: (context, state) =>
           EditTransactionScreen(transaction: state.extra! as Transaction),
+    ),
+    GoRoute(
+      path: '/goal/edit',
+      builder: (context, state) => EditGoalScreen(goal: state.extra! as Goal),
     ),
   ],
 );

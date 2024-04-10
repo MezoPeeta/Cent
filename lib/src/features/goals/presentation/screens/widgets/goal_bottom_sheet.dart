@@ -1,6 +1,6 @@
 import 'package:cent/src/core/common/widgets/button.dart';
 import 'package:cent/src/core/model/goal.dart';
-import 'package:cent/src/features/savings/presentation/bloc/goal/goals_bloc.dart';
+import 'package:cent/src/features/goals/presentation/bloc/goal/goals_bloc.dart';
 import 'package:cent/src/features/savings/presentation/cubit/color_cubit.dart';
 import 'package:cent/src/features/savings/presentation/cubit/icon_cubit.dart';
 import 'package:cent/src/features/savings/presentation/goal_theme.dart';

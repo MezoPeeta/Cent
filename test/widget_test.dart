@@ -5,25 +5,30 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:cent/src/app.dart';
+import 'package:cent/src/features/savings/presentation/screens/savings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('test balance card', (WidgetTester tester) async {
+    await tester.pumpWidget(const MaterialApp(home: SavingsScreen()));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    //find card
+    // // click on the balance card
+    // await tester.tap(card);
+    // // change value
+    // final input = find.ancestor(
+    //   of: find.text('My savings'),
+    //   matching: find.byType(TextFormField),
+    // );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // await tester.enterText(input, '500');
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // final confirmBtn = find.byType(CustomElevatedButton);
+
+    // await tester.tap(confirmBtn);
+    // // value should be changed
+    // final text = find.text('500');
+    // expect(text, findsOneWidget);
   });
 }

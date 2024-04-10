@@ -1,4 +1,5 @@
 import 'package:cent/src/core/common/enums/transaction.dart';
+import 'package:cent/src/core/common/widgets/delete_dialog.dart';
 import 'package:cent/src/core/model/transaction.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
@@ -45,33 +46,15 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 onPressed: () {
                   showDialog<Widget>(
                     context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Delete transaction ?'),
-                      content: Text('Delete ${widget.transaction.name}'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            context.pop();
-                          },
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            context.read<TransactionBloc>().add(
-                                  DeleteTransactionEvent(
-                                    widget.transaction.id!,
-                                  ),
-                                );
-                            context.go('/home');
-                          },
-                          child: Text(
-                            'Delete',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
-                          ),
-                        ),
-                      ],
+                    builder: (context) => DeleteDialog(
+                      title: 'Delete Transaction ?',
+                      content: 'Delete ${widget.transaction.name}',
+                      deleteOnPressed: () {
+                        context.read<TransactionBloc>().add(
+                              DeleteTransactionEvent(widget.transaction.id!),
+                            );
+                        context.go('/home');
+                      },
                     ),
                   );
                 },

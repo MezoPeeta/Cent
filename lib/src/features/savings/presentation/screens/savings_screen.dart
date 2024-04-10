@@ -1,3 +1,4 @@
+import 'package:cent/src/core/common/widgets/header_text.dart';
 import 'package:cent/src/core/model/transaction.dart';
 import 'package:cent/src/core/model/user.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
@@ -8,6 +9,8 @@ import 'package:cent/src/features/savings/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+
+
 
 class SavingsScreen extends StatelessWidget {
   const SavingsScreen({super.key});
@@ -54,9 +57,8 @@ class SavingsScreen extends StatelessWidget {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Transaction',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  HeaderText(
+                    header: 'Transaction',
                   ),
                 ],
               ),

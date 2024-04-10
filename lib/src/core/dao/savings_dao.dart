@@ -10,12 +10,13 @@ class SavingsDao {
     final db = await dbProvider.database;
     final List<Map<String, dynamic>> maps =
         await db!.query(tableName, columns: ['id', 'name', 'balance']);
+
     if (maps.isNotEmpty) {
       return User.fromMap(maps.first);
     }
     return User(
       id: 0,
-      name: '',
+      name: 'Guest',
       balance: 0,
     );
   }

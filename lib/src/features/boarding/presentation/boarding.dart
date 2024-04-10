@@ -77,9 +77,11 @@ class _BoardingScreenState extends State<BoardingScreen> {
                         width: 200,
                         child: TextFormField(
                           initialValue: context.read<SavingsBloc>().state.name,
-                          onChanged: (value) => context
-                              .read<SavingsBloc>()
-                              .add(ChangeUserName(value)),
+                          onChanged: (value) {
+                            context
+                                .read<SavingsBloc>()
+                                .add(ChangeUserName(value));
+                          },
                         ),
                       ),
                       const SizedBox(

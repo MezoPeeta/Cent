@@ -7,11 +7,7 @@ class SavingsDatabaseProvider {
 
   Database? _database;
 
-  // Future<Database?> get database async {
-  //   if (_database != null) return _database;
-  //   _database = await createDatabase();
-  //   return _database;
-  // }
+
 
   Future<Database?> get database async => _database ??= await createDatabase();
 

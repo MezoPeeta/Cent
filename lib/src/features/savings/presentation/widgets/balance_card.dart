@@ -18,17 +18,19 @@ class BalanceCard extends StatelessWidget {
           width: double.infinity,
           height: 155,
           decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              borderRadius: BorderRadius.circular(25),),
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: InkWell(
             onTap: () {
               showModalBottomSheet<Widget>(
-                  context: context,
-                  builder: (context) => EditBalance(
-                        initialValue: '0.0',
-                      ),);
+                context: context,
+                builder: (context) => EditBalance(
+                  initialValue: '0.0',
+                ),
+              );
             },
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(12),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -43,25 +45,12 @@ class BalanceCard extends StatelessWidget {
                   ),
                   BlocBuilder<SavingsBloc, User>(
                     builder: (context, state) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '\$${state.balance}',
-                            style: const TextStyle(
-                                fontSize: 40, fontWeight: FontWeight.bold,),
-                          ),
-                          // FilledButton.icon(
-                          //     onPressed: () {
-                          //       showModalBottomSheet(
-                          //           context: context,
-                          //           builder: (context) => EditBalance(
-                          //                 initialValue: "${state.balance}",
-                          //               ));
-                          //     },
-                          //     icon: const Icon(Icons.edit_outlined),
-                          //     label: const Text("Edit"))
-                        ],
+                      return Text(
+                        '\$${state.balance}',
+                        style: const TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                        ),
                       );
                     },
                   ),
