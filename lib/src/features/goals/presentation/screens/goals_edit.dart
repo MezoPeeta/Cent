@@ -1,8 +1,7 @@
 import 'package:cent/src/core/common/widgets/delete_dialog.dart';
 import 'package:cent/src/core/model/goal.dart';
 import 'package:cent/src/features/goals/presentation/bloc/goal/goals_bloc.dart';
-import 'package:cent/src/features/savings/presentation/cubit/icon_cubit.dart';
-import 'package:cent/src/features/savings/presentation/goal_theme.dart';
+import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
 import 'package:cent/src/features/savings/presentation/widgets/icon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +34,9 @@ class EditGoalScreen extends StatelessWidget {
                         context
                             .read<GoalsBloc>()
                             .add(DeleteGoalEvent(goal.id!));
+                        context
+                            .read<TransactionBloc>()
+                            .add(DeleteAllTransactionGoalsEvent(goal.id!));
                         context.go('/home');
                       },
                     ),
@@ -54,8 +56,7 @@ class EditGoalScreen extends StatelessWidget {
                   children: [
                     // ignore: prefer_const_constructors
                     IconCard(
-                      backgroundColor: Color(goal.color).withOpacity(0.3),
-                      iconColor: Color(goal.color),
+                      backgroundColor: Color(goal.color),
                       icon: IconData(
                         goal.icon,
                         fontFamily: 'MaterialIcons',
@@ -115,6 +116,7 @@ class EditGoalScreen extends StatelessWidget {
                             icon: goal.icon,
                             color: goal.color,
                             id: goal.id,
+                            traAmount: goal.traAmount,
                           );
                           if (_formKey.currentState!.validate()) {
                             context

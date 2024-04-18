@@ -16,15 +16,21 @@ class GoalDao {
     return [];
   }
 
+  Future<Goal> getGoal(int id) async {
+    final db = await dbProvider.database;
+    final maps = await db!.query(tableName, where: 'id = ?', whereArgs: [id]);
+    return Goal.fromMap(maps.first);
+  }
+
   Future<int> delete(int id) async {
     final db = await dbProvider.database;
 
-    return  db!.delete(tableName, where: 'id= ?', whereArgs: [id]);
+    return db!.delete(tableName, where: 'id= ?', whereArgs: [id]);
   }
 
   Future<int> insert(Goal goal) async {
     final db = await dbProvider.database;
-    return  db!.insert(tableName, goal.toMap());
+    return db!.insert(tableName, goal.toMap());
   }
 
   Future<int> update(Goal goal) async {

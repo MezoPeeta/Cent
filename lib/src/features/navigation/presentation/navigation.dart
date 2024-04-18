@@ -8,7 +8,10 @@ class Navigation extends StatelessWidget {
   const Navigation({super.key});
   @override
   Widget build(BuildContext context) {
-    final children = <Widget>[const SavingsScreen(), const GoalsScreen()];
+    final children = <Widget>[
+      const SavingsScreen(),
+      const GoalsScreen(),
+    ];
     return BlocBuilder<NavigationCubit, int>(
       builder: (context, state) {
         return Scaffold(

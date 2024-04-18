@@ -6,6 +6,7 @@ class Transaction {
     required this.amount,
     required this.icon,
     required this.type,
+    this.goalID = 0,
     this.id,
   });
 
@@ -16,12 +17,14 @@ class Transaction {
       amount: map['amount'] as double,
       type: map['type'] as String,
       icon: map['icon'] as int,
+      goalID: map['goalID'] as int,
     );
   }
   int? id;
   String name;
   double amount;
   int icon;
+  int goalID;
   String type;
   String createdAt = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
 
@@ -31,6 +34,7 @@ class Transaction {
       'amount': amount,
       'icon': icon,
       'type': type,
+      'goalID': goalID,
       'createdAt': createdAt,
     };
     if (id != null) {
@@ -41,5 +45,5 @@ class Transaction {
 
   @override
   String toString() =>
-      'Transaction(id:$id, name: $name, amount: $amount, icon: $icon, type: $type)';
+      'Transaction(id:$id, name: $name, amount: $amount, icon: $icon, type: $type, goalID: $goalID)';
 }

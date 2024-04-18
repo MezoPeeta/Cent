@@ -7,8 +7,6 @@ class SavingsDatabaseProvider {
 
   Database? _database;
 
-
-
   Future<Database?> get database async => _database ??= await createDatabase();
 
   Future<Database> createDatabase() async {
@@ -20,10 +18,10 @@ class SavingsDatabaseProvider {
           'CREATE TABLE USER(id INTEGER PRIMARY KEY, name TEXT, balance DOUBLE(100))',
         );
         await db.execute(
-          'CREATE TABLE GOAL(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), color int(100),icon int(100),createdAt DATE)',
+          'CREATE TABLE GOAL(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), color int(7),icon int(7),traAmount DOUBLE(2),createdAt DATE)',
         );
         await db.execute(
-          'CREATE TABLE TRANSACTIONS(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), icon int(100), type TEXT, createdAt DATE)',
+          'CREATE TABLE TRANSACTIONS(id INTEGER PRIMARY KEY, name TEXT, amount DOUBLE(100), icon int(100), type TEXT, goalID int(2), createdAt DATE)',
         );
       },
     );

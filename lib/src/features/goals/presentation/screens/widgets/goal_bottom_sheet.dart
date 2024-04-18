@@ -168,6 +168,7 @@ class AddGoalBottomSheet extends StatelessWidget {
                     final goal = Goal(
                       name: _nameController.text,
                       amount: double.parse(_amountController.text),
+                      traAmount: 0,
                       color: goalColor,
                       icon: goalIcon,
                     );

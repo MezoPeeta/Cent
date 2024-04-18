@@ -12,13 +12,14 @@ class GoalContainer extends StatelessWidget {
   final Goal goal;
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       height: 100,
       child: FilledButton(
-        onPressed: () => context.push('/goal/edit', extra: goal),
+        onPressed: () => context.push('/goal/detail', extra: goal),
         style: ButtonStyle(
           backgroundColor: MaterialStatePropertyAll<Color>(
-            Color(goal.color).withOpacity(0.1),
+            colorScheme.primaryContainer,
           ),
           shape: MaterialStatePropertyAll<OutlinedBorder>(
             RoundedRectangleBorder(
@@ -41,20 +42,21 @@ class GoalContainer extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 19,
                           fontWeight: FontWeight.bold,
-                          color: Color(goal.color),
+                          color: colorScheme.onPrimaryContainer,
                         ),
                       ),
                       Text(
-                        r'$70/1000',
-                        style:
-                            TextStyle(color: Color(goal.color), fontSize: 20),
+                        '\$${goal.traAmount}/${goal.amount}',
+                        style: TextStyle(
+                          color: colorScheme.onPrimaryContainer,
+                          fontSize: 20,
+                        ),
                       ),
                     ],
                   ),
                   IconCard(
                     icon: IconData(goal.icon, fontFamily: 'MaterialIcons'),
-                    backgroundColor: Color(goal.color).withOpacity(0.3),
-                    iconColor: Color(goal.color),
+                    backgroundColor: Color(goal.color),
                   ),
                 ],
               ),

@@ -34,11 +34,16 @@ class TransactionCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontSize: 16.5,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16.5,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Text(

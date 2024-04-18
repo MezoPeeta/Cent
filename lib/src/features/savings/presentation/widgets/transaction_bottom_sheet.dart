@@ -1,6 +1,7 @@
 import 'package:cent/src/core/common/enums/transaction.dart';
 import 'package:cent/src/core/common/widgets/button.dart';
 import 'package:cent/src/core/model/transaction.dart';
+import 'package:cent/src/features/goals/presentation/bloc/goal/goals_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/savings/savings_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
 import 'package:cent/src/features/savings/presentation/cubit/icon_cubit.dart';
@@ -14,12 +15,13 @@ import 'package:go_router/go_router.dart';
 class AddTransactionBottomSheet extends StatelessWidget {
   AddTransactionBottomSheet({
     super.key,
+    this.goalID = 0,
   });
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  final int goalID;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -151,6 +153,12 @@ class AddTransactionBottomSheet extends StatelessWidget {
                           amount: double.parse(_amountController.text),
                           icon: transactionIcon,
                         );
+                        if (goalID != 0) {
+                          transaction.goalID = goalID;
+                          context
+                              .read<GoalsBloc>()
+                              .add(EditGoalTraAmountEvent(goalID,transaction));
+                        }
                         context
                             .read<TransactionBloc>()
                             .add(AddTransactionEvent(transaction));
@@ -158,7 +166,7 @@ class AddTransactionBottomSheet extends StatelessWidget {
                         context.read<SavingsBloc>().add(
                               EditUserSavings(
                                 transaction.amount,
-                                isExpense:transactionType.name == 'expense',
+                                isExpense: transactionType.name == 'expense',
                               ),
                             );
 

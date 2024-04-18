@@ -27,11 +27,19 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
     });
     on<EditUserSavings>((event, emit) async {
       var user = await SavingsDao().getUser();
+
       if (event.isExpense) {
-        user = user.copyWith(
-          balance: user.balance - event.transactionAmount,
-          id: 1,
-        );
+        if (user.balance < event.transactionAmount) {
+          user = user.copyWith(
+            balance: 0,
+            id: 1,
+          );
+        } else {
+          user = user.copyWith(
+            balance: user.balance - event.transactionAmount,
+            id: 1,
+          );
+        }
       } else {
         user = user.copyWith(
           balance: user.balance + event.transactionAmount,
