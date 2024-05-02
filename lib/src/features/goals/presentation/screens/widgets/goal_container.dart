@@ -1,5 +1,6 @@
+import 'package:cent/src/core/common/constants.dart';
+import 'package:cent/src/core/common/widgets/icon_custom_shape.dart';
 import 'package:cent/src/core/model/goal.dart';
-import 'package:cent/src/features/savings/presentation/widgets/icon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,16 +11,17 @@ class GoalContainer extends StatelessWidget {
   });
 
   final Goal goal;
+
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
-      height: 100,
+      height: 150,
       child: FilledButton(
+        onLongPress: () => context.push('/goal/edit', extra: goal),
         onPressed: () => context.push('/goal/detail', extra: goal),
         style: ButtonStyle(
           backgroundColor: MaterialStatePropertyAll<Color>(
-            colorScheme.primaryContainer,
+            changeColorLightness(Color(goal.color), 0.9),
           ),
           shape: MaterialStatePropertyAll<OutlinedBorder>(
             RoundedRectangleBorder(
@@ -34,31 +36,46 @@ class GoalContainer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        goal.name,
-                        style: TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                      Text(
-                        '\$${goal.traAmount}/${goal.amount}',
-                        style: TextStyle(
-                          color: colorScheme.onPrimaryContainer,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    goal.name,
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: changeColorLightness(Color(goal.color), 0.3),
+                    ),
                   ),
-                  IconCard(
+                  IconCustomShape(
+                    color: Color(goal.color),
                     icon: IconData(goal.icon, fontFamily: 'MaterialIcons'),
-                    backgroundColor: Color(goal.color),
                   ),
                 ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '\$${goal.traAmount}',
+                    style: TextStyle(
+                      color: changeColorLightness(Color(goal.color), 0.3),
+                    ),
+                  ),
+                  Text(
+                    '\$${goal.amount}',
+                    style: TextStyle(
+                      color: changeColorLightness(Color(goal.color), 0.3),
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              LinearProgressIndicator(
+                value: goal.traAmount / goal.amount,
+                borderRadius: BorderRadius.circular(8),
+                backgroundColor: Color(goal.color).withOpacity(0.2),
+                minHeight: 10,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  changeColorLightness(Color(goal.color), 0.3),
+                ),
               ),
             ],
           ),

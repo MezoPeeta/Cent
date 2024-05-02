@@ -1,8 +1,9 @@
+import 'package:cent/src/core/common/constants.dart';
 import 'package:cent/src/core/common/widgets/header_text.dart';
+import 'package:cent/src/core/common/widgets/icon_custom_shape.dart';
 import 'package:cent/src/core/model/goal.dart';
 import 'package:cent/src/features/goals/presentation/bloc/goal/goals_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
-import 'package:cent/src/features/savings/presentation/widgets/icon_card.dart';
 import 'package:cent/src/features/savings/presentation/widgets/transaction_bottom_sheet.dart';
 import 'package:cent/src/features/savings/presentation/widgets/transaction_card.dart';
 import 'package:flutter/material.dart';
@@ -50,17 +51,18 @@ class GoalDetailScreen extends StatelessWidget {
                               value: percentage,
                               strokeCap: StrokeCap.round,
                               backgroundColor:
-                                  Color(goal.color).withOpacity(0.1),
+                                  changeColorLightness(Color(goal.color), 0.3)
+                                      .withOpacity(0.1),
                               strokeWidth: 7,
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                Color(goal.color),
+                                changeColorLightness(Color(goal.color), 0.3),
                               ),
                             ),
                           ),
                           Column(
                             children: [
-                              IconCard(
-                                backgroundColor: Color(goal.color),
+                              IconCustomShape(
+                                color: Color(goal.color),
                                 icon: IconData(
                                   goal.icon,
                                   fontFamily: 'MaterialIcons',

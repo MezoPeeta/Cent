@@ -24,30 +24,24 @@ class SavingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Hello,',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      BlocBuilder<SavingsBloc, User>(
-                        builder: (context, state) {
-                          return Text(
-                            state.name,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                  const Text(
+                    'Hello,',
+                    style: TextStyle(fontSize: 16),
                   ),
-                  const CircleAvatar(),
+                  BlocBuilder<SavingsBloc, User>(
+                    builder: (context, state) {
+                      return Text(
+                        state.name,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
               const BalanceCard(),

@@ -14,13 +14,20 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
 
-  runApp(MultiBlocProvider(providers: [
-    BlocProvider(create: (_) => SavingsBloc()..add(LoadSavings())),
-    BlocProvider(create: (_) => NavigationCubit()),
-    BlocProvider(create: (_) => GoalsBloc()..add(LoadGoalsEvent())),
-    BlocProvider(create: (_) => TransactionBloc()..add(LoadTransactionEvent())),
-    BlocProvider(create: (_) => ColorCubit()),
-    BlocProvider(create: (_) => IconCubit()),
-    BlocProvider(create: (_) => TransactionCubit()),
-  ], child: const MyApp(),),);
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => SavingsBloc()..add(LoadSavings())),
+        BlocProvider(create: (_) => NavigationCubit()),
+        BlocProvider(create: (_) => GoalsBloc()..add(LoadGoalsEvent())),
+        BlocProvider(
+          create: (_) => TransactionBloc()..add(LoadTransactionEvent()),
+        ),
+        BlocProvider(create: (_) => ColorCubit()),
+        BlocProvider(create: (_) => IconCubit()),
+        BlocProvider(create: (_) => TransactionCubit()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }

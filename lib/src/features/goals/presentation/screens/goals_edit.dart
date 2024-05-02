@@ -1,8 +1,8 @@
 import 'package:cent/src/core/common/widgets/delete_dialog.dart';
+import 'package:cent/src/core/common/widgets/icon_custom_shape.dart';
 import 'package:cent/src/core/model/goal.dart';
 import 'package:cent/src/features/goals/presentation/bloc/goal/goals_bloc.dart';
 import 'package:cent/src/features/savings/presentation/bloc/transaction/transaction_bloc.dart';
-import 'package:cent/src/features/savings/presentation/widgets/icon_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -55,13 +55,14 @@ class EditGoalScreen extends StatelessWidget {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     // ignore: prefer_const_constructors
-                    IconCard(
-                      backgroundColor: Color(goal.color),
+                    IconCustomShape(
+                      color: Color(goal.color),
                       icon: IconData(
                         goal.icon,
                         fontFamily: 'MaterialIcons',
                       ),
                     ),
+
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "cent",
+            "name": "cent (debug mode)",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
         },
         {
             "name": "cent (profile mode)",
@@ -19,7 +19,8 @@
             "name": "cent (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+
         }
     ]
 }
