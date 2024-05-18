@@ -1,6 +1,7 @@
 import 'package:cent/src/features/goals/presentation/screens/goals_screen.dart';
 import 'package:cent/src/features/navigation/cubit/navigation_cubit.dart';
 import 'package:cent/src/features/savings/presentation/screens/savings_screen.dart';
+import 'package:cent/src/features/settings/presentation/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +12,7 @@ class Navigation extends StatelessWidget {
     final children = <Widget>[
       const SavingsScreen(),
       const GoalsScreen(),
+      const SettingsScreen(),
     ];
     return BlocBuilder<NavigationCubit, int>(
       builder: (context, state) {
@@ -34,6 +36,12 @@ class Navigation extends StatelessWidget {
                       : Icons.monetization_on_outlined,
                 ),
                 label: 'Goals',
+              ),
+              NavigationDestination(
+                icon: Icon(
+                  state == 2 ? Icons.settings : Icons.settings_outlined,
+                ),
+                label: 'Settings',
               ),
             ],
           ),

@@ -50,9 +50,13 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       title: 'Delete Transaction ?',
                       content: 'Delete ${widget.transaction.name}',
                       deleteOnPressed: () {
+                        context
+                            .read<SavingsBloc>()
+                            .add(ResetUserBalance(widget.transaction));
                         context.read<TransactionBloc>().add(
                               DeleteTransactionEvent(widget.transaction.id!),
                             );
+
                         context.go('/home');
                       },
                     ),
@@ -248,6 +252,14 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                             context
                                 .read<TransactionBloc>()
                                 .add(EditTransaction(editTransaction));
+                            if (widget.transaction.amount != currentAmount) {
+                              context.read<SavingsBloc>().add(
+                                    EditUserSavings(
+                                      currentAmount,
+                                      isExpense: transactionType == 'expense',
+                                    ),
+                                  );
+                            }
                             if (widget.transaction.type != transactionType) {
                               context.read<SavingsBloc>().add(
                                     EditUserSavings(

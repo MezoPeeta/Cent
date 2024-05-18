@@ -1,4 +1,4 @@
-import 'package:cent/src/core/database/savings_database.dart';
+import 'package:cent/src/core/database/cent_database.dart';
 
 import 'package:cent/src/core/model/user.dart';
 

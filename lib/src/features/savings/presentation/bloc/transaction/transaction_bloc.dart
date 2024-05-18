@@ -26,6 +26,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           ),
         );
         emit(TransactionInitial(transactions: currentTransactions));
+
         return;
       }
 

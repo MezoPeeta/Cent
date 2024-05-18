@@ -7,6 +7,7 @@ import 'package:cent/src/features/savings/presentation/bloc/transaction/transact
 import 'package:cent/src/features/savings/presentation/cubit/color_cubit.dart';
 import 'package:cent/src/features/savings/presentation/cubit/icon_cubit.dart';
 import 'package:cent/src/features/savings/presentation/cubit/transaction_cubit.dart';
+import 'package:cent/src/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +27,8 @@ void main() async {
         BlocProvider(create: (_) => ColorCubit()),
         BlocProvider(create: (_) => IconCubit()),
         BlocProvider(create: (_) => TransactionCubit()),
+        BlocProvider(create: (_) => BiometricCubit()),
+
       ],
       child: const MyApp(),
     ),

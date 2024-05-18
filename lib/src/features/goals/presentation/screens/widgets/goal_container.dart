@@ -20,10 +20,10 @@ class GoalContainer extends StatelessWidget {
         onLongPress: () => context.push('/goal/edit', extra: goal),
         onPressed: () => context.push('/goal/detail', extra: goal),
         style: ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll<Color>(
+          backgroundColor: WidgetStatePropertyAll<Color>(
             changeColorLightness(Color(goal.color), 0.9),
           ),
-          shape: MaterialStatePropertyAll<OutlinedBorder>(
+          shape: WidgetStatePropertyAll<OutlinedBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -36,12 +36,16 @@ class GoalContainer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    goal.name,
-                    style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                      color: changeColorLightness(Color(goal.color), 0.3),
+                  Expanded(
+                    child: Text(
+                      goal.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                        color: changeColorLightness(Color(goal.color), 0.3),
+                      ),
                     ),
                   ),
                   IconCustomShape(

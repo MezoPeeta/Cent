@@ -8,6 +8,8 @@ import 'package:cent/src/features/navigation/presentation/navigation.dart';
 import 'package:cent/src/features/savings/presentation/screens/edit_transaction.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/settings/presentation/widgets/biometrics_widget.dart';
+
 final boardingDone = CacheHelper.getBool('boardingDone');
 
 final router = GoRouter(
@@ -15,7 +17,7 @@ final router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) =>
-          boardingDone ? const Navigation() : const BoardingScreen(),
+          boardingDone ? InitBiometric(child: const Navigation()) : const BoardingScreen(),
     ),
     GoRoute(
       path: '/home',

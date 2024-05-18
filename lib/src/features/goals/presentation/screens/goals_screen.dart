@@ -43,7 +43,7 @@ class GoalsScreen extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton(
                     style: ButtonStyle(
-                      shape: MaterialStatePropertyAll<OutlinedBorder>(
+                      shape: WidgetStatePropertyAll<OutlinedBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

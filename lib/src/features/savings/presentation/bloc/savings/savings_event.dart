@@ -25,3 +25,9 @@ final class AddUserBalance extends SavingsEvent {
   AddUserBalance(this.balance);
   final double balance;
 }
+
+final class ResetUserBalance extends SavingsEvent {
+  ResetUserBalance(this.transaction);
+
+  final Transaction transaction;
+}

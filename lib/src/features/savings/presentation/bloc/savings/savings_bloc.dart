@@ -1,4 +1,5 @@
 import 'package:cent/src/core/dao/savings_dao.dart';
+import 'package:cent/src/core/model/transaction.dart';
 import 'package:cent/src/core/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +32,7 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
       if (event.isExpense) {
         if (user.balance < event.transactionAmount) {
           user = user.copyWith(
-            balance: 0,
+            balance: user.balance,
             id: 1,
           );
         } else {
@@ -57,6 +58,17 @@ class SavingsBloc extends Bloc<SavingsEvent, User> {
     });
     on<AddUserBalance>((event, emit) async {
       final user = state.copyWith(balance: event.balance, id: 1);
+      await SavingsDao().update(user);
+      emit(user);
+    });
+    on<ResetUserBalance>((event, emit) async {
+      var user = await SavingsDao().getUser();
+      final transaction = event.transaction;
+      if (transaction.type == 'income') {
+        user = user.copyWith(balance: user.balance - transaction.amount, id: 1);
+      } else {
+        user = user.copyWith(balance: user.balance + transaction.amount, id: 1);
+      }
       await SavingsDao().update(user);
       emit(user);
     });

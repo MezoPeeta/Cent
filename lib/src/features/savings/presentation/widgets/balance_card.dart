@@ -25,9 +25,12 @@ class BalanceCard extends StatelessWidget {
             onTap: () {
               showModalBottomSheet<Widget>(
                 context: context,
-                builder: (context) => EditBalance(
-                  initialValue: '0.0',
-                ),
+                builder: (context) {
+                  final userBalance = context.read<SavingsBloc>().state.balance;
+                  return EditBalance(
+                    initialValue: '$userBalance',
+                  );
+                },
               );
             },
             borderRadius: BorderRadius.circular(12),
